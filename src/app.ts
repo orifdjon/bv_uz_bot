@@ -3,7 +3,7 @@ import {IConfigService} from "./config/config.interface";
 import LocalSession from "telegraf-session-local"
 import {Telegraf} from "telegraf";
 import {IBotContext} from "./context/context.interface";
-import {Command} from "./commands/commond.class";
+import {Command} from "./commands/command.class";
 import {StartCommand} from "./commands/start.command";
 
 class Bot {
