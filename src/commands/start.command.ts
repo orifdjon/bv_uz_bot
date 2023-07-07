@@ -1,4 +1,4 @@
-import {Command} from "./commond.class";
+import {Command} from "./command.class";
 import {IBotContext} from "../context/context.interface";
 import {Markup, Telegraf} from "telegraf";
 
