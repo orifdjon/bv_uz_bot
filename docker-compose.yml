@@ -1,0 +1,16 @@
+version: '3.8'
+services:
+  db:
+    container_name: bv-db
+    image: postgres:14.8
+    volumes:
+      - data-volume:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: bv_perfume
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "54326:5432"
+
+volumes:
+  data-volume:
