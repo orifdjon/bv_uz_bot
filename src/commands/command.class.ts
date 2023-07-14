@@ -1,9 +1,8 @@
-import {IBotContext} from "../context/context.interface";
-import {Telegraf} from "telegraf";
+import { type IBotContext } from '../context/context.interface'
+import { type Telegraf } from 'telegraf'
 
 export abstract class Command {
+  protected constructor (public bot: Telegraf<IBotContext>) {}
 
-    protected constructor(public bot: Telegraf<IBotContext>) {}
-
-    abstract handle(): void
+  abstract handle (): void
 }
