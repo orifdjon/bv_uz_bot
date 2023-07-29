@@ -6,11 +6,11 @@ import { type IBotContext } from './context/context.interface'
 import { type Command } from './command/command.class'
 import { StartCommand } from './command/start.command'
 import { AuthWizard } from './scene/auth.wizard'
-import { BasketCommand } from './commands/basket.command'
-import { OrderCommand } from './commands/order.command'
-import { AccountCommand } from './commands/account.command'
-import { FeedbackCommand } from './commands/feedback.command'
-
+import { BasketCommand } from './command/basket.command'
+import { OrderCommand } from './command/order.command'
+import { AccountCommand } from './command/account.command'
+import { FeedbackCommand } from './command/feedback.command'
+import { InfoScene } from './scene/info.scene'
 
 class Bot {
   bot: Telegraf<IBotContext>
@@ -22,6 +22,16 @@ class Bot {
   }
 
   init (): void {
+    const authWizard = new AuthWizard()
+    const infoScene = new InfoScene()
+
+    const stage =
+      new Scenes.Stage<IBotContext>([
+        authWizard.getScene(),
+        infoScene.getScene()
+      ])
+    this.bot.use(stage).middleware()
+
     this.commands = [
       new StartCommand(this.bot),
       new BasketCommand(this.bot),
@@ -32,14 +42,7 @@ class Bot {
     for (const command of this.commands) {
       command.handle()
     }
-    const authWizard = new AuthWizard()
-    const stage =
-      new Scenes.Stage<IBotContext>([authWizard.getWizard()])
-    this.bot.use(stage).middleware()
-    this.bot.command('auth', async (ctx) => {
-      console.log('Entering wizard scenes')
-      await ctx.scene.enter(authWizard.getName())
-    })
+
     void this.bot.launch().then(r => {
       console.log('Service is started')
     })

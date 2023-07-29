@@ -1,9 +1,9 @@
-import { WizardClass } from './wizard.class'
+import { AbstractScene } from './abstractScene'
 import { Scenes } from 'telegraf'
 import { type IBotContext } from '../context/context.interface'
 import { getMessage } from '../utils/tg.model.utils'
 
-export class AuthWizard extends WizardClass {
+export class AuthWizard extends AbstractScene {
   public readonly name: string = 'auth_wizard'
   private readonly wizardScene: Scenes.WizardScene<IBotContext>
 
@@ -16,7 +16,7 @@ export class AuthWizard extends WizardClass {
     return this.name
   }
 
-  getWizard (): Scenes.WizardScene<IBotContext> {
+  getScene (): Scenes.BaseScene<IBotContext> {
     return this.wizardScene
   }
 
