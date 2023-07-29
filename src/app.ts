@@ -1,14 +1,16 @@
 import { ConfigService } from './config/config.service'
 import { type IConfigService } from './config/config.interface'
 import LocalSession from 'telegraf-session-local'
-import { Telegraf } from 'telegraf'
+import { Telegraf, Scenes } from 'telegraf'
 import { type IBotContext } from './context/context.interface'
-import { type Command } from './commands/command.class'
-import { StartCommand } from './commands/start.command'
+import { type Command } from './command/command.class'
+import { StartCommand } from './command/start.command'
+import { AuthWizard } from './scene/auth.wizard'
 import { BasketCommand } from './commands/basket.command'
 import { OrderCommand } from './commands/order.command'
 import { AccountCommand } from './commands/account.command'
 import { FeedbackCommand } from './commands/feedback.command'
+
 
 class Bot {
   bot: Telegraf<IBotContext>
@@ -30,9 +32,20 @@ class Bot {
     for (const command of this.commands) {
       command.handle()
     }
-    void this.bot.launch().then(() => {
+    const authWizard = new AuthWizard()
+    const stage =
+      new Scenes.Stage<IBotContext>([authWizard.getWizard()])
+    this.bot.use(stage).middleware()
+    this.bot.command('auth', async (ctx) => {
+      console.log('Entering wizard scenes')
+      await ctx.scene.enter(authWizard.getName())
+    })
+    void this.bot.launch().then(r => {
       console.log('Service is started')
     })
+
+    process.once('SIGINT', () => { this.bot.stop('SIGINT') })
+    process.once('SIGTERM', () => { this.bot.stop('SIGTERM') })
   }
 }
 
