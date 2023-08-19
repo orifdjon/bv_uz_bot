@@ -2,7 +2,7 @@ import type { Knex } from 'knex'
 
 // Update with your config settings.
 
-const config: Record<string, Knex.Config> = {
+export const config: Record<string, Knex.Config> = {
   staging: {
     client: 'pg',
     connection: {
@@ -39,5 +39,3 @@ const config: Record<string, Knex.Config> = {
   }
 
 }
-
-module.exports = config

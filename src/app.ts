@@ -15,6 +15,9 @@ import { FeedbackScene } from './scene/feedback.scene'
 import { CurrentLocation } from './scene/current.location.scene'
 import { CategoriesScene } from './scene/categories.scene'
 import { type BaseScene } from 'telegraf/typings/scenes'
+import { type Grade, type User } from './model/entity'
+import { knex, type Knex } from 'knex'
+import { config } from '../knexfile'
 
 class Bot {
   bot: Telegraf<IBotContext>
@@ -25,7 +28,33 @@ class Bot {
     this.bot.use(new LocalSession({ database: 'sessions.json' })).middleware()
   }
 
-  init (): void {
+  async init (): Promise<void> {
+    // console.log('Config ', config)
+    // const connection = knex(config.staging)
+    // try {
+    //   // Insert a new Grade
+    //   const newGrade: Grade = {
+    //     id: '12345678-1234-1234-1234-123456789012',
+    //     name: 'Gold',
+    //     cash_back: 5
+    //   }
+    //   await this.insertGrade(connection, newGrade)
+    //
+    //   // Fetch all Users with a specific grade_id
+    //   const usersWithGrade = await this.getUsersWithGradeId(connection, newGrade.id)
+    //   console.log('Users with Grade ID:', usersWithGrade)
+    //
+    //   // Update the price of a Product
+    //   const productId = '98765432-9876-9876-9876-987654321098'
+    //   const newPrice = 1200
+    //   await this.updateProductPrice(connection, productId, newPrice)
+    //
+    //   console.log('Product price updated successfully.')
+    // } catch (error) {
+    //   console.error('Error executing queries', error)
+    // } finally {
+    //   await connection.destroy()
+    // }
     const stage = new Scenes.Stage<IBotContext>(this.getScenes())
     this.bot.use(stage).middleware()
     this.commands = this.getCommands()
@@ -38,8 +67,25 @@ class Bot {
       console.log('Service is started')
     })
 
-    process.once('SIGINT', () => { this.bot.stop('SIGINT') })
-    process.once('SIGTERM', () => { this.bot.stop('SIGTERM') })
+    process.once('SIGINT', () => {
+      this.bot.stop('SIGINT')
+    })
+    process.once('SIGTERM', () => {
+      this.bot.stop('SIGTERM')
+    })
+  }
+
+  // eslint-disable-next-line @typescript-eslint/explicit-function-return-type
+  async insertGrade (knex: Knex, grade: Grade) {
+    await knex('grade').insert(grade)
+  }
+
+  async getUsersWithGradeId (knex: Knex, gradeId: string): Promise<User[]> {
+    return await knex('user').where('grade_id', gradeId)
+  }
+
+  async updateProductPrice (knex: Knex, productId: string, newPrice: number): Promise<void> {
+    await knex('product').where('id', productId).update({ price: newPrice })
   }
 
   private getScenes (): ReadonlyArray<BaseScene<IBotContext>> {
@@ -64,4 +110,4 @@ class Bot {
 }
 
 const bot = new Bot(new ConfigService())
-bot.init()
+void bot.init()

@@ -5,8 +5,8 @@ export async function up (knex: Knex): Promise<void> {
     .raw(`
       CREATE TABLE IF NOT EXISTS grade (
         id        uuid not null primary key,
-        name      varchar(255),
-        cash_back integer
+        name      varchar(255) not null,
+        cash_back integer not null
       )
     `)
     .raw(`
@@ -37,8 +37,8 @@ export async function up (knex: Knex): Promise<void> {
         CREATE TABLE IF NOT EXISTS product_cash_back
         (
             id        uuid not null primary key,
-            status    varchar(255),
-            cash_back bigint
+            status    varchar(255) not null,
+            cash_back bigint nut null
         )
     `)
     .raw(`
