@@ -3,7 +3,6 @@ import { AbstractScene } from './abstract.scene'
 import { type BaseScene } from 'telegraf/typings/scenes'
 import { type IBotContext } from '../context/context.interface'
 import { message } from 'telegraf/filters'
-import { FeedbackCommand } from '../command/feedback.command'
 import { getMessage } from '../utils/tg.model.utils'
 
 export class FeedbackScene extends AbstractScene {

@@ -1,4 +1,4 @@
-import { Markup, Scenes } from 'telegraf'
+import { Scenes } from 'telegraf'
 import { AbstractScene } from './abstract.scene'
 import { type BaseScene } from 'telegraf/typings/scenes'
 import { type IBotContext } from '../context/context.interface'

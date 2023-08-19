@@ -13,7 +13,6 @@ export class AccountCommand extends Command {
     })
 
     this.bot.action('more_info', async ctx => {
-      console.log('BBBBBOOOOOOMM!!', ctx.scene)
       await ctx.scene.enter(InfoScene.sceneName)
     })
 

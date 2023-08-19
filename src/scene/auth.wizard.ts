@@ -30,28 +30,24 @@ export class AuthWizard extends AbstractScene {
     async (ctx) => {
       ctx.scene.session.firstName = getMessage(ctx).text
       await ctx.reply('Введите свою фамилию?')
-      console.log('CTX >', ctx)
       return ctx.wizard.next()
     },
     // Step 3 - Ask for phone number
     async (ctx) => {
       ctx.scene.session.secondName = getMessage(ctx).text
       await ctx.reply('Введите свой номер телефона?')
-      console.log('CTX >', ctx)
       return ctx.wizard.next()
     },
     // Step 4 - Ask for city
     async (ctx) => {
       ctx.scene.session.city = getMessage(ctx).text
       await ctx.reply('Введите свой город?')
-      console.log('CTX >', ctx)
       return ctx.wizard.next()
     },
     // Step 5 - Ask for sex
     async (ctx) => {
       ctx.scene.session.sex = getMessage(ctx).text
       await ctx.reply('Введите свой пол?')
-      console.log('CTX >', ctx.scene.session)
       await ctx.scene.leave()
     })
   }

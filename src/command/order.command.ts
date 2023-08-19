@@ -1,8 +1,7 @@
 import { Command } from './command.class'
 import { Markup } from 'telegraf'
-import NodeGeocoder from 'node-geocoder'
-import { getMessage } from '../utils/tg.model.utils'
 import { CategoriesScene } from '../scene/categories.scene'
+
 const backButton = Markup.button.callback('Назад', 'back_button')
 
 export class OrderCommand extends Command {
@@ -61,7 +60,6 @@ export class OrderCommand extends Command {
     })
 
     this.bot.action('categories', async ctx => {
-      console.log("ASDASDASDASDASDASDASDA")
       await ctx.scene.enter(CategoriesScene.sceneName)
     })
   }

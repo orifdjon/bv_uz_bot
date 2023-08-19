@@ -1,6 +1,6 @@
 import { Command } from './command.class'
 import { Markup } from 'telegraf'
-import { FeedbackScene } from '../scene/feedbackScene'
+import { FeedbackScene } from '../scene/feedback.scene'
 
 export class FeedbackCommand extends Command {
   handle (): void {

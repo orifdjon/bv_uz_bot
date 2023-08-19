@@ -1,11 +1,9 @@
-import { Markup, Scenes } from 'telegraf'
+import { Scenes } from 'telegraf'
 import { AbstractScene } from './abstract.scene'
 import { type BaseScene } from 'telegraf/typings/scenes'
 import { type IBotContext } from '../context/context.interface'
 import { message } from 'telegraf/filters'
 import { getMessage } from '../utils/tg.model.utils'
-import { AccountCommand } from '../command/account.command'
-import { TestCommand } from '../command/test.command'
 
 export class InfoScene extends AbstractScene {
   public static readonly sceneName: string = 'info_scene'
@@ -26,9 +24,6 @@ export class InfoScene extends AbstractScene {
 
   initialize (): Scenes.BaseScene<IBotContext> {
     const infoScene = new Scenes.BaseScene<IBotContext>(InfoScene.sceneName)
-
-    const testCommand = new TestCommand(infoScene)
-    testCommand.handle()
     infoScene.command('back', async ctx => {
       await ctx.scene.leave()
     })
@@ -40,7 +35,6 @@ export class InfoScene extends AbstractScene {
     })
     infoScene.on(message('text'), async (ctx, next) => {
       await ctx.reply('AAA-AAA' + getMessage(ctx).text)
-      console.log(getMessage(ctx))
       void next()
     })
     return infoScene

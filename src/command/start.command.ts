@@ -6,12 +6,6 @@ export class StartCommand extends Command {
   handle (): void {
     this.bot.start((ctx) => {
       Scenes.Stage.enter(AuthWizard.name)
-      // console.log(ctx.session)
-      // void ctx.reply('Вам понравился курс?', Markup.inlineKeyboard([
-      //   Markup.button.callback('👍', 'course_like'),
-      //   Markup.button.callback('👎', 'course_dislike')
-      // ])
-      // )
     })
 
     this.bot.action('course_like', (ctx) => {
