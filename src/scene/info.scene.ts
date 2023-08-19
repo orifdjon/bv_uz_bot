@@ -1,5 +1,5 @@
 import { Markup, Scenes } from 'telegraf'
-import { AbstractScene } from './abstractScene'
+import { AbstractScene } from './abstract.scene'
 import { type BaseScene } from 'telegraf/typings/scenes'
 import { type IBotContext } from '../context/context.interface'
 import { message } from 'telegraf/filters'
@@ -38,10 +38,10 @@ export class InfoScene extends AbstractScene {
     infoScene.leave(async ctx => {
       await ctx.reply('Спасибо за дп данные')
     })
-    infoScene.on(message('text'), async (ctx) => {
+    infoScene.on(message('text'), async (ctx, next) => {
       await ctx.reply('AAA-AAA' + getMessage(ctx).text)
-      // ctx.
-      // await ctx.scene.leave()
+      console.log(getMessage(ctx))
+      void next()
     })
     return infoScene
   }

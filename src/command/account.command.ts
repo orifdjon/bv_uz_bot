@@ -7,7 +7,8 @@ export class AccountCommand extends Command {
     this.bot.command('account', async (ctx) => {
       void ctx.reply('Больше инфо', Markup.inlineKeyboard([
         Markup.button.callback('Добавьте кое-что еще о себе', 'more_info'),
-        Markup.button.callback('Cashback', 'cashback')
+        Markup.button.callback('Cashback', 'cashback'),
+        Markup.button.callback('Изменение', 'edit')
       ]))
     })
 
@@ -17,13 +18,7 @@ export class AccountCommand extends Command {
     })
 
     this.bot.action('cashback', (ctx) => {
-      ctx.session.courseLike = true
       void ctx.editMessageText('У вас столько-то кешбэка')
-    })
-
-    this.bot.action('cashback', (ctx) => {
-      ctx.session.courseLike = true
-      void ctx.editMessageText('Изменение ваших данных')
     })
   }
 }

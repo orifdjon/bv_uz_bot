@@ -1,4 +1,4 @@
-import { AbstractScene } from './abstractScene'
+import { AbstractScene } from './abstract.scene'
 import { Scenes } from 'telegraf'
 import { type IBotContext } from '../context/context.interface'
 import { getMessage } from '../utils/tg.model.utils'

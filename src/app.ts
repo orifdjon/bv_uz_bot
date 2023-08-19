@@ -11,6 +11,10 @@ import { OrderCommand } from './command/order.command'
 import { AccountCommand } from './command/account.command'
 import { FeedbackCommand } from './command/feedback.command'
 import { InfoScene } from './scene/info.scene'
+import { FeedbackScene } from './scene/feedbackScene'
+import { CurrentLocation } from './scene/current.location.scene'
+import { type AbstractScene } from './scene/abstract.scene'
+import { CategoriesScene } from './scene/categories.scene'
 
 class Bot {
   bot: Telegraf<IBotContext>
@@ -22,16 +26,19 @@ class Bot {
   }
 
   init (): void {
-    const authWizard = new AuthWizard()
-    const infoScene = new InfoScene()
-
-    const stage =
-      new Scenes.Stage<IBotContext>([
-        authWizard.getScene(),
-        infoScene.getScene()
-      ])
+    const categoriesScene: AbstractScene = new CategoriesScene()
+    const authWizard: AbstractScene = new AuthWizard()
+    const infoScene: AbstractScene = new InfoScene()
+    const newFeedBackScene: AbstractScene = new FeedbackScene()
+    const currentLocationScene = new CurrentLocation()
+    const stage = new Scenes.Stage<IBotContext>([
+      categoriesScene.getScene(),
+      authWizard.getScene(),
+      infoScene.getScene(),
+      newFeedBackScene.getScene(),
+      currentLocationScene.getScene()
+    ])
     this.bot.use(stage).middleware()
-
     this.commands = [
       new StartCommand(this.bot),
       new BasketCommand(this.bot),
