@@ -29,50 +29,32 @@ class Bot {
   }
 
   async init (): Promise<void> {
-    // console.log('Config ', config)
-    // const connection = knex(config.staging)
-    // try {
-    //   // Insert a new Grade
-    //   const newGrade: Grade = {
-    //     id: '12345678-1234-1234-1234-123456789012',
-    //     name: 'Gold',
-    //     cash_back: 5
-    //   }
-    //   await this.insertGrade(connection, newGrade)
-    //
-    //   // Fetch all Users with a specific grade_id
-    //   const usersWithGrade = await this.getUsersWithGradeId(connection, newGrade.id)
-    //   console.log('Users with Grade ID:', usersWithGrade)
-    //
-    //   // Update the price of a Product
-    //   const productId = '98765432-9876-9876-9876-987654321098'
-    //   const newPrice = 1200
-    //   await this.updateProductPrice(connection, productId, newPrice)
-    //
-    //   console.log('Product price updated successfully.')
-    // } catch (error) {
-    //   console.error('Error executing queries', error)
-    // } finally {
-    //   await connection.destroy()
-    // }
-    const stage = new Scenes.Stage<IBotContext>(this.getScenes())
-    this.bot.use(stage).middleware()
-    this.commands = this.getCommands()
+    console.log('Config ', config)
+    const connection = knex(config.staging)
+    try {
+      const stage = new Scenes.Stage<IBotContext>(this.getScenes())
+      this.bot.use(stage).middleware()
+      this.commands = this.getCommands()
 
-    for (const command of this.commands) {
-      command.handle()
+      for (const command of this.commands) {
+        command.handle()
+      }
+
+      void this.bot.launch().then(r => {
+        console.log('Service is started')
+      })
+
+      process.once('SIGINT', () => {
+        this.bot.stop('SIGINT')
+      })
+      process.once('SIGTERM', () => {
+        this.bot.stop('SIGTERM')
+      })
+    } catch (error) {
+      console.error('Error executing queries', error)
+    } finally {
+      await connection.destroy()
     }
-
-    void this.bot.launch().then(r => {
-      console.log('Service is started')
-    })
-
-    process.once('SIGINT', () => {
-      this.bot.stop('SIGINT')
-    })
-    process.once('SIGTERM', () => {
-      this.bot.stop('SIGTERM')
-    })
   }
 
   // eslint-disable-next-line @typescript-eslint/explicit-function-return-type

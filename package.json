@@ -7,6 +7,8 @@
     "build": "tsc",
     "dev": "nodemon",
     "start": "ts-node src/app.ts",
+    "migrate-stg": "knex migrate:latest --env staging",
+    "migrate-prod": "knex migrate:latest --env production",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {

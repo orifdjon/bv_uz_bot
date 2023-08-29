@@ -38,7 +38,7 @@ export async function up (knex: Knex): Promise<void> {
         (
             id        uuid not null primary key,
             status    varchar(255) not null,
-            cash_back bigint nut null
+            cash_back bigint not null
         )
     `)
     .raw(`

@@ -1,16 +1,15 @@
 import type { Knex } from 'knex'
 
 // Update with your config settings.
-
-export const config: Record<string, Knex.Config> = {
+const config: Record<string, Knex.Config> = {
   staging: {
     client: 'pg',
     connection: {
-      host: 'localhost',
-      port: 54326,
-      database: 'bv_perfume',
-      user: 'postgres',
-      password: 'postgres'
+      host: '5.23.54.125',
+      port: 5432,
+      database: 'bv_perfume_stg',
+      user: 'application',
+      password: '80|||3n<UJ&F+O'
     },
     pool: {
       min: 2,
@@ -39,3 +38,4 @@ export const config: Record<string, Knex.Config> = {
   }
 
 }
+module.exports = config
